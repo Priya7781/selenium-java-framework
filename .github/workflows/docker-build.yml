@@ -7,7 +7,6 @@ on:
     paths:
       - Dockerfile
       - pom.xml
-      - src/**
 
 jobs:
 
