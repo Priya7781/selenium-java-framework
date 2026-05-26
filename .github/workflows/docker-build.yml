@@ -29,8 +29,8 @@ jobs:
 
       - name: Build Docker Image
         run: |
-          docker build -t ghcr.io/${{ github.repository }}/selenium-framework:latest .
+          docker build -t ghcr.io/$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')/selenium-framework:latest .
 
       - name: Push Docker Image
         run: |
-          docker push ghcr.io/${{ github.repository }}/selenium-framework:latest
+          docker push ghcr.io/$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')/selenium-framework:latest
