@@ -1,0 +1,26 @@
+name: Run Selenium Tests Once
+
+on:
+  workflow_run:
+    workflows: ["Build Docker Image"]
+    types: [completed]
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Pull Docker Image
+        run: |
+          docker pull ghcr.io/${{ github.repository }}/selenium-framework:latest
+
+      - name: Run both tests in one container session
+        run: |
+          docker run --rm ghcr.io/${{ github.repository }}/selenium-framework:latest bash -lc "mvn test -Dtest=FirstTest && mvn test -Dtest=SecondTest"
