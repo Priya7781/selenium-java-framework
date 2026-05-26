@@ -1,4 +1,4 @@
-name: Selenium Tests
+name: Selenium Docker Tests
 
 on:
   push:
@@ -6,7 +6,8 @@ on:
       - main
 
 jobs:
-  test:
+
+  docker-test:
 
     runs-on: ubuntu-latest
 
@@ -15,22 +16,11 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Set Up Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: '21'
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
-      - name: Cache Maven Packages
-        uses: actions/cache@v4
-        with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-m2
+      - name: Build Docker Image
+        run: docker build -t selenium-framework .
 
-      - name: Install Dependencies
-        run: mvn clean install
-
-      - name: Run Selenium Tests
-        run: mvn test
+      - name: Run Selenium Tests in Docker
+        run: docker run selenium-framework
