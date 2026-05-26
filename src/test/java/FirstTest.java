@@ -42,6 +42,9 @@ public class FirstTest {
             driver.findElement(By.xpath("//input[@id='username']"))
                     .sendKeys("admin");
 
+        
+            
+
             // Enter password
             driver.findElement(By.xpath("//input[@id='password']"))
                     .sendKeys("1234");
@@ -60,7 +63,7 @@ public class FirstTest {
             // Fetch text
             String actualMessage = messageElement.getText();
 
-            System.out.println("Actual Message: " + actualMessage);
+            // System.out.println("Actual Message: " + actualMessage);
 
             // Assertion
             Assert.assertEquals(actualMessage, "Login Successful!");
