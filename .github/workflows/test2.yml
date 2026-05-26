@@ -1,0 +1,26 @@
+name: Run SecondTest
+
+on:
+  workflow_run:
+    workflows: ["Build Docker Image"]
+    types: [completed]
+
+jobs:
+  test2:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Pull Docker Image
+        run: |
+          docker pull ghcr.io/$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')/selenium-framework:latest
+
+      - name: Run SecondTest
+        run: |
+          docker run --rm ghcr.io/$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')/selenium-framework:latest mvn test -Dtest=SecondTest

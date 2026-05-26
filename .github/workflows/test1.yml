@@ -1,4 +1,4 @@
-name: Run Selenium Tests Once
+name: Run FirstTest
 
 on:
   workflow_run:
@@ -6,7 +6,7 @@ on:
     types: [completed]
 
 jobs:
-  run-tests:
+  test1:
     runs-on: ubuntu-latest
 
     steps:
@@ -21,6 +21,6 @@ jobs:
         run: |
           docker pull ghcr.io/$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')/selenium-framework:latest
 
-      - name: Run both tests in one container session
+      - name: Run FirstTest
         run: |
-          docker run --rm ghcr.io/$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')/selenium-framework:latest bash -lc "mvn test -Dtest=FirstTest && mvn test -Dtest=SecondTest"
+          docker run --rm ghcr.io/$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')/selenium-framework:latest mvn test -Dtest=FirstTest
