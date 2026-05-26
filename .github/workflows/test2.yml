@@ -1,9 +1,9 @@
 name: Run SecondTest
 
 on:
-  workflow_run:
-    workflows: ["Build Docker Image"]
-    types: [completed]
+  push:
+    branches:
+      - main
 
 jobs:
   test2:
