@@ -63,7 +63,7 @@ public class FirstTest {
             // Fetch text
             String actualMessage = messageElement.getText();
 
-            // System.out.println("Actual Message: " + actualMessage);
+            System.out.println("Actual Message: " + actualMessage);
 
             // Assertion
             Assert.assertEquals(actualMessage, "Login Successful!");
