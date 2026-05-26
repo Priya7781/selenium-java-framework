@@ -1,14 +1,13 @@
-FROM maven:3.9.6-eclipse-temurin-21
+FROM selenium/standalone-chrome:latest
+
+USER root
+
+RUN apt-get update && apt-get install -y maven
 
 WORKDIR /app
 
-# Copy pom first
-COPY pom.xml .
-
-# Cache dependencies
-RUN mvn dependency:go-offline
-
-# Copy remaining project
 COPY . .
+
+RUN mvn dependency:resolve
 
 CMD ["mvn", "test"]
